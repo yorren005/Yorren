@@ -34,6 +34,13 @@ export default function HomeBlogGrid() {
           { opacity: 0, y: 30 },
           { opacity: 1, y: 0, stagger: 0.1, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: '.home-blog-section', start: 'top 85%' } }
         );
+        // Parallax image scale reveal
+        gsap.utils.toArray('.blog-card-image img').forEach((img) => {
+          gsap.fromTo(img, 
+            { scale: 1.15 }, 
+            { scale: 1, duration: 1.2, ease: 'power2.out', scrollTrigger: { trigger: img, start: 'top 95%' } }
+          );
+        });
       }, 100);
     });
   }, []);

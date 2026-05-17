@@ -4,10 +4,7 @@ import YorrenGlobeSection from '@/components/YorrenGlobeSection';
 import HomeAnimations from '@/components/HomeAnimations';
 import HomeBlogGrid from '@/components/HomeBlogGrid';
 
-export const metadata = {
-  title: 'YORREN | Redefining Human Potential',
-  description: 'An initiative to rethink the human capability in the era of AI.',
-};
+
 
 export default function HomePage() {
   return (

@@ -2,18 +2,25 @@
 @config "../tailwind.config.js";
 
 :root {
-    --bg-color: #000000;
+    --bg-color: #050505;
     --text-primary: #ffffff;
-    --text-secondary: #888888;
+    --text-secondary: rgba(255, 255, 255, 0.7);
     --accent-color: #ffffff;
     --border-color: rgba(255, 255, 255, 0.1);
     --card-bg: #0a0a0a;
-    --glass-bg: rgba(255, 255, 255, 0.03);
+    --glass-bg: rgba(10, 10, 10, 0.4);
     --btn-bg: #ffffff;
     --btn-text: #000000;
     --radius: 0.5rem;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
+
+    /* Gemini Effect Paths - Dark Mode (Default) */
+    --gemini-color-1: #FFB7C5;
+    --gemini-color-2: #FFDDB7;
+    --gemini-color-3: #B1C5FF;
+    --gemini-color-4: #4FABFF;
+    --gemini-color-5: #076EFF;
 }
 
 [data-theme="light"] {
@@ -28,7 +35,14 @@
     --btn-text: #ffffff;
     --radius: 0.5rem;
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 98%;
+
+    /* Gemini Effect Paths - Light Mode (Deeper contrast) */
+    --gemini-color-1: #d6336c;
+    --gemini-color-2: #e85d04;
+    --gemini-color-3: #4361ee;
+    --gemini-color-4: #0077b6;
+    --gemini-color-5: #03045e;
 }
 
 * {
@@ -403,56 +417,6 @@ body.cursor-hover .cursor-follower {
     display: flex;
     gap: 16px;
     justify-content: center;
-}
-
-/* ─── System Status Pill ─── */
-.status-pill {
-    position: absolute;
-    top: 100px;
-    right: 40px;
-    left: auto;
-    z-index: 3;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px 16px;
-    border-radius: 100px;
-    background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    opacity: 0;
-    animation: statusFadeIn 1.5s ease 2s forwards;
-}
-
-[data-theme="light"] .status-pill {
-    background: rgba(0, 0, 0, 0.04);
-    border: 1px solid rgba(0, 0, 0, 0.08);
-}
-
-@keyframes statusFadeIn {
-    to { opacity: 1; }
-}
-
-.status-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #22c55e;
-    box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
-    animation: statusPulse 2s ease-in-out infinite;
-}
-
-@keyframes statusPulse {
-    0%, 100% { opacity: 1; box-shadow: 0 0 8px rgba(34, 197, 94, 0.6); }
-    50%      { opacity: 0.5; box-shadow: 0 0 16px rgba(34, 197, 94, 0.4); }
-}
-
-.status-text {
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    color: var(--text-secondary);
-    font-weight: 600;
 }
 
 
@@ -2869,4 +2833,280 @@ html {
 
 [data-theme="light"] .modal-close:hover {
     background: rgba(0, 0, 0, 0.1);
+}
+
+/* ─── 15 Point UX Polish & Responsiveness ─── */
+
+/* 2. Custom Slim Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: var(--bg-color);
+}
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-secondary);
+}
+
+/* 3. Cursor Blend Mode */
+.cursor-dot, .cursor-outline {
+    mix-blend-mode: difference;
+}
+
+/* 4. Button Micro-Interactions */
+.pill-btn {
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease, background 0.3s ease;
+}
+
+/* ─── Faint Background Block Separators ─── */
+.thesis-section, .pillars-section, .home-blog-section, .newsletter-section {
+    position: relative;
+}
+.thesis-section::before, .pillars-section::before, .home-blog-section::before, .newsletter-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+    z-index: 0;
+}
+.thesis-section::after, .pillars-section::after, .home-blog-section::after, .newsletter-section::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 300px;
+    background: radial-gradient(ellipse at top, rgba(255,255,255,0.015), transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+[data-theme="light"] .thesis-section::before, 
+[data-theme="light"] .pillars-section::before, 
+[data-theme="light"] .home-blog-section::before, 
+[data-theme="light"] .newsletter-section::before {
+    background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.08), transparent);
+}
+[data-theme="light"] .thesis-section::after, 
+[data-theme="light"] .pillars-section::after, 
+[data-theme="light"] .home-blog-section::after, 
+[data-theme="light"] .newsletter-section::after {
+    background: radial-gradient(ellipse at top, rgba(0,0,0,0.015), transparent 70%);
+}
+.pill-btn:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
+}
+.pill-btn .btn-arrow {
+    transition: transform 0.3s ease;
+}
+.pill-btn:hover .btn-arrow {
+    transform: translateX(4px);
+}
+
+/* 5. Pillar Card Magnetic/Dimming Effects */
+.pillars-grid:hover .pillar-card:not(:hover) {
+    opacity: 0.5;
+    filter: blur(2px);
+    transition: opacity 0.4s ease, filter 0.4s ease;
+}
+.pillar-card {
+    transition: opacity 0.4s ease, filter 0.4s ease;
+}
+.pillar-card.active {
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.15), 0 10px 30px rgba(0,0,0,0.2);
+}
+
+/* 6. Input Focus Ring */
+.input-group input:focus {
+    outline: none;
+    box-shadow: inset 0 0 0 1px var(--text-primary);
+}
+
+/* 7. Parallax Hover on Blog Grid (Base classes) */
+.blog-card {
+    overflow: hidden;
+}
+.blog-card-image {
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+.blog-card:hover .blog-card-image {
+    transform: scale(1.05);
+}
+.blog-card-desc {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 0;
+    transform: translateY(10px);
+}
+.blog-card:hover .blog-card-desc {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 8. Mobile Menu Hamburger */
+.hamburger-btn {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 24px;
+    height: 24px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1001;
+}
+.hamburger-btn span {
+    width: 24px;
+    height: 2px;
+    background: var(--text-primary);
+    border-radius: 10px;
+    transition: all 0.3s linear;
+    position: relative;
+    transform-origin: 1px;
+}
+.hamburger-btn.open span:nth-child(1) { transform: rotate(45deg); }
+.hamburger-btn.open span:nth-child(2) { opacity: 0; transform: translateX(20px); }
+.hamburger-btn.open span:nth-child(3) { transform: rotate(-45deg); }
+
+/* Mobile Menu Overlay */
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+}
+[data-theme="light"] .mobile-menu {
+    background: rgba(255, 255, 255, 0.95);
+}
+.mobile-menu.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+.mobile-nav-links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    font-size: 24px;
+    font-weight: 600;
+}
+.mobile-nav-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+.mobile-nav-links a.active, .mobile-nav-links a:hover {
+    color: var(--text-primary);
+}
+
+
+/* ─── Media Queries ─── */
+
+@media (max-width: 1024px) {
+    .pillars-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .blog-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .hero-headline {
+        font-size: clamp(32px, 5vw, 60px);
+    }
+    .thesis-statement {
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 768px) {
+    /* Navbar adjustments */
+    .desktop-nav, .desktop-btn {
+        display: none !important;
+    }
+    .hamburger-btn {
+        display: flex;
+    }
+    
+    /* Container & Padding Adjustments */
+    .container {
+        padding: 0 20px;
+    }
+    .hero-monolith {
+        padding: 32px 24px;
+        margin: 0 20px;
+    }
+    
+    /* Typography */
+    .hero-headline {
+        font-size: clamp(28px, 8vw, 40px);
+    }
+    .hero-subtext {
+        font-size: 16px;
+    }
+    .thesis-statement {
+        font-size: 20px;
+        line-height: 1.5;
+    }
+    
+    /* Grids to 1 column */
+    .pillars-grid, .blog-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    /* UI Refinements */
+
+
+    .proof-logos {
+        gap: 24px;
+    }
+    .proof-logo {
+        height: 18px;
+    }
+    .input-group {
+        flex-direction: column;
+    }
+    .input-group button {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* 9. Spotlight Hover Effect for Hero Monolith */
+.hero-monolith {
+    overflow: hidden;
+}
+.hero-monolith::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.06), transparent 40%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    z-index: 0;
+}
+[data-theme="light"] .hero-monolith::before {
+    background: radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0,0,0,0.04), transparent 40%);
+}
+.hero-monolith:hover::before {
+    opacity: 1;
 }

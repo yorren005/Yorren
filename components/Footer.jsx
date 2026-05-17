@@ -3,7 +3,7 @@ import Link from 'next/link';
 export default function Footer({ showTagline = false }) {
   return (
     <footer className="footer">
-      <div className="container">
+      <div style={{ width: 'calc(100% - 48px)', maxWidth: '1200px', margin: '0 auto', padding: '0 32px' }}>
         {showTagline && (
           <p className="footer-tagline">REDEFINING HUMAN POTENTIAL IN THE 21ST CENTURY</p>
         )}

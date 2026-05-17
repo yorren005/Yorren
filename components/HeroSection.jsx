@@ -152,8 +152,8 @@ export default function HeroSection() {
         .from('.hero-subtext', { y: 20, opacity: 0 }, '+=1.8')
         .from('.hero-actions', { y: 20, opacity: 0 }, '-=0.8');
 
-      gsap.from('.status-pill', { x: -30, opacity: 0, duration: 1, delay: 2, ease: 'power3.out' });
       gsap.from('.proof-label', { y: 15, opacity: 0, duration: 0.8, delay: 2.2, ease: 'power3.out' });
+      gsap.from('.proof-logo', { y: 15, opacity: 0, stagger: 0.1, duration: 0.8, delay: 2.3, ease: 'power3.out' });
     }
 
     // Scroll indicator
@@ -167,19 +167,10 @@ export default function HeroSection() {
       window.addEventListener('scroll', onScroll, { passive: true });
     }
 
-    // Status clock
-    function updateStatusTime() {
-      const timeEl = document.getElementById('status-time');
-      if (timeEl) {
-        timeEl.textContent = new Date().toLocaleTimeString('en-US', { hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit' });
-      }
-    }
-    const clockInterval = setInterval(updateStatusTime, 1000);
-    updateStatusTime();
+
 
     return () => {
       cancelAnimationFrame(rafId);
-      clearInterval(clockInterval);
       window.removeEventListener('resize', init);
       window.removeEventListener('mousemove', onMove);
       window.removeEventListener('mouseleave', onLeave);
@@ -190,12 +181,15 @@ export default function HeroSection() {
     <section className="hero-section">
       <canvas id="neural-canvas" ref={canvasRef} />
       <div className="hero-overlay" />
-      <div className="status-pill" id="status-pill">
-        <span className="status-dot" />
-        <span className="status-text">SYSTEM ACTIVE // <span id="status-time">00:00:00</span></span>
-      </div>
       <div className="container">
-        <div className="hero-monolith">
+        <div 
+          className="hero-monolith"
+          onMouseMove={(e) => {
+            const rect = e.currentTarget.getBoundingClientRect();
+            e.currentTarget.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+            e.currentTarget.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+          }}
+        >
           <h1 className="hero-headline" id="hero-headline">Unlock Your True Potential.</h1>
           <p className="hero-subtext">An initiative to rethink human capability in the age of artificial intelligence.</p>
           <div className="hero-actions">

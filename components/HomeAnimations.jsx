@@ -29,12 +29,16 @@ export default function HomeAnimations() {
     const cards = document.querySelectorAll('.pillar-card');
     cards.forEach((card) => {
       const onMove = (e) => {
+        if (window.innerWidth < 768) return; // Disable on mobile
         const rect = card.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
         gsap.to(card, { rotateX: ((y - rect.height / 2) / rect.height) * -5, rotateY: ((x - rect.width / 2) / rect.width) * 5, duration: 0.4, ease: 'power2.out', transformPerspective: 900 });
       };
-      const onLeave = () => gsap.to(card, { rotateX: 0, rotateY: 0, duration: 0.7, ease: 'elastic.out(1, 0.5)' });
+      const onLeave = () => {
+        if (window.innerWidth < 768) return;
+        gsap.to(card, { rotateX: 0, rotateY: 0, duration: 0.7, ease: 'elastic.out(1, 0.5)' });
+      };
       card.addEventListener('mousemove', onMove);
       card.addEventListener('mouseleave', onLeave);
     });
