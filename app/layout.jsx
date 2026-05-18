@@ -50,8 +50,8 @@ export const metadata = {
     },
   },
   icons: {
-    icon: '/assets/logo-cropped.png',
-    apple: '/assets/logo-cropped.png',
+    icon: '/icon.png',
+    apple: '/icon.png',
   },
   verification: {
     google: 'zoeeH_5ohc-QF1gs9jeN9uQaUNkCeClRIafupwowdko',
