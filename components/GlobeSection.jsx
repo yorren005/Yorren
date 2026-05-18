@@ -52,20 +52,7 @@ export default function GlobeSection() {
     });
     earthGroup.add(new THREE.Mesh(atmosphereGeometry, atmosphereMaterial));
 
-    // Satellites
-    const satellites = [];
-    const satGeometry = new THREE.SphereGeometry(0.015, 16, 16);
-    const satMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
-    for (let i = 0; i < 5; i++) {
-      const pivot = new THREE.Group();
-      pivot.rotation.x = Math.random() * Math.PI;
-      pivot.rotation.y = Math.random() * Math.PI;
-      const sat = new THREE.Mesh(satGeometry, satMaterial);
-      sat.position.set(1.15 + Math.random() * 0.15, 0, 0);
-      pivot.add(sat);
-      earthGroup.add(pivot);
-      satellites.push({ pivot, speed: 0.002 + Math.random() * 0.003 });
-    }
+
 
     // Stars
     const starGeometry = new THREE.SphereGeometry(80, 64, 64);
@@ -108,8 +95,26 @@ export default function GlobeSection() {
     container.addEventListener('pointerdown', (e) => handleDown(e.clientX, e.clientY));
     window.addEventListener('pointerup', handleUp);
     container.addEventListener('pointermove', (e) => handleMove(e.clientX, e.clientY));
-    container.addEventListener('touchstart', (e) => { if (e.touches.length === 1) handleDown(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
-    container.addEventListener('touchmove', (e) => { if (isDragging && e.touches.length === 1) handleMove(e.touches[0].clientX, e.touches[0].clientY); }, { passive: true });
+
+    // Mobile touch: only initiate drag on a clearly horizontal swipe so vertical
+    // page-scroll is never hijacked on mobile devices.
+    let touchStartX = 0, touchStartY = 0;
+    container.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 1) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+      }
+    }, { passive: true });
+    container.addEventListener('touchmove', (e) => {
+      if (e.touches.length !== 1) return;
+      const dx = Math.abs(e.touches[0].clientX - touchStartX);
+      const dy = Math.abs(e.touches[0].clientY - touchStartY);
+      // Only treat as globe drag when horizontal movement dominates
+      if (dx > dy && dx > 8) {
+        if (!isDragging) handleDown(e.touches[0].clientX, e.touches[0].clientY);
+        handleMove(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    }, { passive: true });
     container.addEventListener('touchend', handleUp);
 
     let animId;
@@ -117,7 +122,6 @@ export default function GlobeSection() {
       animId = requestAnimationFrame(animate);
       earthMesh.rotation.y += autoRotateSpeed;
       starMesh.rotation.y -= 0.0001;
-      satellites.forEach((s) => { s.pivot.rotation.z += s.speed; });
       renderer.render(scene, camera);
     }
     animate();

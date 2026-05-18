@@ -717,6 +717,8 @@ body.cursor-hover .cursor-follower {
     cursor: grab;
     border-radius: 50%;
     overflow: hidden;
+    /* Allow vertical scroll to pass through on touch devices */
+    touch-action: pan-y;
 }
 
 #globe-container:active {
@@ -766,18 +768,38 @@ body.cursor-hover .cursor-follower {
         justify-content: center;
     }
 
-    .globe-canvas-wrapper canvas {
-        max-width: 350px;
+    .globe-canvas-wrapper {
+        width: 100%;
+        max-width: 320px;
+        margin: 0 auto;
     }
 
     #globe-container {
-        width: 350px;
-        height: 350px;
+        width: 100%;
+        max-width: 320px;
+        height: 320px;
+        touch-action: pan-y;
     }
 
     .globe-glow-ring {
-        width: 320px;
-        height: 320px;
+        width: 300px;
+        height: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .globe-canvas-wrapper {
+        max-width: 260px;
+    }
+
+    #globe-container {
+        max-width: 260px;
+        height: 260px;
+    }
+
+    .globe-glow-ring {
+        width: 240px;
+        height: 240px;
     }
 }
 
