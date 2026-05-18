@@ -1,11 +1,12 @@
-import { Inter } from 'next/font/google';
+import { Inter, Outfit } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import CustomCursor from '@/components/CustomCursor';
 import ScrollProgress from '@/components/ScrollProgress';
 
-const inter = Inter({ subsets: ['latin'], weight: ['400', '500', '600', '700'] });
+const inter = Inter({ subsets: ['latin'], weight: ['400', '500', '600', '700'], variable: '--font-inter' });
+const outfit = Outfit({ subsets: ['latin'], weight: ['400', '500', '600', '700', '800'], variable: '--font-outfit' });
 
 export const metadata = {
   metadataBase: new URL('https://yorren.com'),
@@ -150,7 +151,7 @@ export default function RootLayout({ children }) {
   };
 
   return (
-    <html lang="en">
+    <html lang="en" className={`${inter.variable} ${outfit.variable}`}>
       <body className={inter.className}>
         <script
           type="application/ld+json"

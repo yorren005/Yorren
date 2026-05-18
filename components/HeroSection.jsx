@@ -121,10 +121,27 @@ export default function HeroSection() {
 
     const onMove = (e) => { mouse.x = e.clientX; mouse.y = e.clientY; };
     const onLeave = () => { mouse.x = -9999; mouse.y = -9999; };
+    const onClick = (e) => {
+      const cx = e.clientX;
+      const cy = e.clientY;
+      for (let i = 0; i < dots.length; i++) {
+        const d = dots[i];
+        const dx = d.x - cx;
+        const dy = d.y - cy;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 300) {
+          const force = (300 - dist) / 300;
+          const angle = Math.atan2(dy, dx);
+          d.vx += Math.cos(angle) * force * 15;
+          d.vy += Math.sin(angle) * force * 15;
+        }
+      }
+    };
 
     window.addEventListener('resize', init);
     window.addEventListener('mousemove', onMove);
     window.addEventListener('mouseleave', onLeave);
+    window.addEventListener('click', onClick);
     init();
     animate();
 
@@ -174,6 +191,7 @@ export default function HeroSection() {
       window.removeEventListener('resize', init);
       window.removeEventListener('mousemove', onMove);
       window.removeEventListener('mouseleave', onLeave);
+      window.removeEventListener('click', onClick);
     };
   }, []);
 

@@ -58,22 +58,39 @@ html {
 body {
     background-color: var(--bg-color);
     color: var(--text-primary);
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-inter), 'Inter', sans-serif;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;
     overflow-x: hidden;
 }
+
+h1, h2, h3, h4, h5, h6, .hero-headline, .bloom-heading, .globe-text h2 {
+    font-family: var(--font-outfit), 'Outfit', sans-serif;
+}
+
 
 /* ─── Scroll Progress Bar ─── */
 .scroll-progress {
     position: fixed;
     top: 0;
     left: 0;
-    height: 2px;
+    height: 3px;
     width: 0%;
-    background: var(--text-primary);
+    background: linear-gradient(to right, transparent, var(--text-primary));
     z-index: 9999;
     transition: width 0.05s linear;
+}
+
+.scroll-progress::after {
+    content: '';
+    position: absolute;
+    top: -1px;
+    right: 0;
+    width: 20px;
+    height: 5px;
+    background: var(--text-primary);
+    box-shadow: 0 0 10px 2px var(--text-primary), 0 0 20px 5px var(--text-primary);
+    border-radius: 50%;
 }
 
 /* ─── Custom Cursor ─── */
@@ -81,12 +98,13 @@ body {
     position: fixed;
     width: 8px;
     height: 8px;
-    background: var(--text-primary);
+    background: #fff;
     border-radius: 50%;
     pointer-events: none;
     z-index: 9998;
     transform: translate(-50%, -50%);
     transition: width 0.2s ease, height 0.2s ease, background 0.2s ease;
+    mix-blend-mode: difference;
 }
 
 .cursor-follower {
@@ -99,6 +117,7 @@ body {
     z-index: 9997;
     transform: translate(-50%, -50%);
     transition: border-color 0.2s ease;
+    mix-blend-mode: difference;
 }
 
 [data-theme="light"] .cursor-follower {
@@ -261,7 +280,29 @@ body.cursor-hover .cursor-follower {
     font-size: 14px;
     font-weight: 600;
     cursor: none;
-    transition: all 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.pill-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s ease-out, height 0.6s ease-out;
+    border-radius: 50%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+[data-theme="light"] .pill-btn::before {
+    background: radial-gradient(circle, rgba(0,0,0,0.1) 0%, transparent 70%);
 }
 
 .pill-btn.primary {
@@ -283,13 +324,18 @@ body.cursor-hover .cursor-follower {
 }
 
 .pill-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 0 20px rgba(255,255,255,0.4);
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 10px 30px -10px rgba(255,255,255,0.3);
+}
+
+.pill-btn:hover::before {
+    width: 300px;
+    height: 300px;
 }
 
 [data-theme="light"] .pill-btn.primary:hover,
 [data-theme="light"] .pill-btn.white:hover {
-    box-shadow: 0 0 20px rgba(0,0,0,0.4);
+    box-shadow: 0 10px 30px -10px rgba(0,0,0,0.3);
 }
 
 /* ─── Hero Section ─── */
@@ -1905,6 +1951,8 @@ cite {
     cursor: none;
     transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     position: relative;
+    transform-style: preserve-3d;
+    perspective: 1000px;
 }
 
 .blog-card::before {
@@ -1924,14 +1972,14 @@ cite {
 }
 
 .blog-card:hover {
-    transform: translateY(-6px);
+    transform: translateY(-6px) rotateX(2deg) rotateY(-2deg);
     border-color: rgba(255,255,255,0.2);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3), -10px 10px 20px rgba(0,0,0,0.2);
 }
 
 [data-theme="light"] .blog-card:hover {
     border-color: rgba(0,0,0,0.15);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.08), -10px 10px 20px rgba(0,0,0,0.05);
 }
 
 .blog-card:hover::before {
@@ -1951,11 +1999,13 @@ cite {
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), filter 0.6s ease;
+    filter: saturate(0.8) brightness(0.9);
 }
 
 .blog-card:hover .blog-card-image img {
-    transform: scale(1.05);
+    transform: scale(1.08);
+    filter: saturate(1.1) brightness(1.05);
 }
 
 .blog-card-image-overlay {
@@ -3109,4 +3159,34 @@ html {
 }
 .hero-monolith:hover::before {
     opacity: 1;
+}
+
+/* --- Glassmorphism Animated Borders --- */
+.hero-monolith::after, .thesis-glass::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: conic-gradient(from var(--border-angle, 0deg), transparent 20%, rgba(255,255,255,0.4) 50%, transparent 80%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    animation: rotateBorder 4s linear infinite;
+    z-index: -1;
+}
+
+[data-theme="light"] .hero-monolith::after, [data-theme="light"] .thesis-glass::after {
+    background: conic-gradient(from var(--border-angle, 0deg), transparent 20%, rgba(0,0,0,0.2) 50%, transparent 80%);
+}
+
+@property --border-angle {
+    syntax: '<angle>';
+    inherits: true;
+    initial-value: 0turn;
+}
+
+@keyframes rotateBorder {
+    to { --border-angle: 1turn; }
 }

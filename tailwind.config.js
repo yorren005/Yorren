@@ -17,6 +17,9 @@ module.exports = {
       },
     },
     extend: {
+      fontFamily: {
+        outfit: ['var(--font-outfit)', 'sans-serif'],
+      },
       colors: {
         border: "var(--border-color)", // Linking to your existing border color
         input: "var(--border-color)",
