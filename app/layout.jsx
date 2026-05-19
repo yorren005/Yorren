@@ -50,8 +50,13 @@ export const metadata = {
     },
   },
   icons: {
-    icon: '/eye.png?v=5',
-    apple: '/eye.png?v=5',
+    icon: [
+      { url: '/favicon.ico?v=6' },
+      { url: '/eye.png?v=6', sizes: '512x512', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png?v=6', sizes: '180x180', type: 'image/png' },
+    ],
   },
   verification: {
     google: 'zoeeH_5ohc-QF1gs9jeN9uQaUNkCeClRIafupwowdko',
