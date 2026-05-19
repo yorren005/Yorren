@@ -50,8 +50,8 @@ export const metadata = {
     },
   },
   icons: {
-    icon: '/eye.png?v=4',
-    apple: '/eye.png?v=4',
+    icon: '/eye.png?v=5',
+    apple: '/eye.png?v=5',
   },
   verification: {
     google: 'zoeeH_5ohc-QF1gs9jeN9uQaUNkCeClRIafupwowdko',
