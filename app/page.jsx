@@ -4,6 +4,9 @@ import YorrenGlobeSection from '@/components/YorrenGlobeSection';
 import HomeAnimations from '@/components/HomeAnimations';
 import HomeBlogGrid from '@/components/HomeBlogGrid';
 import IdentityTeaser from '@/components/IdentityTeaser';
+import CapabilityMatrix from '@/components/CapabilityMatrix';
+import SynapticTimeline from '@/components/SynapticTimeline';
+import GlassFAQ from '@/components/GlassFAQ';
 
 
 
@@ -12,6 +15,8 @@ export default function HomePage() {
     <main>
       <HeroSection />
       <GoogleGeminiEffectDemo />
+      <CapabilityMatrix />
+      <SynapticTimeline />
       <YorrenGlobeSection />
 
       {/* Core Thesis Section */}
@@ -20,7 +25,7 @@ export default function HomePage() {
           <div className="thesis-glass">
             <div className="thesis-glow" />
             <span className="thesis-tag">THE MISSION</span>
-            <h2 className="thesis-statement">We are building the definitive framework for extreme human adaptation. A systemic approach to upgrading cognition and physicality for the next era.</h2>
+            <h2 className="thesis-statement">To help you master your mind and body. We build the tools you need to adapt, survive, and thrive.</h2>
           </div>
         </div>
       </section>
@@ -42,8 +47,8 @@ export default function HomePage() {
             <div className="pillar-card active">
               <span className="pillar-number">02</span>
               <div className="pillar-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" /></svg></div>
-              <h3>Applied Resilience</h3>
-              <p>Practical systems for maintaining clarity and taking decisive action in high-pressure environments.</p>
+              <h3>Strategic Endurance</h3>
+              <p>Engineering psychological and physical endurance to maintain absolute clarity in chaotic environments.</p>
             </div>
             <div className="pillar-card">
               <span className="pillar-number">03</span>
@@ -74,6 +79,7 @@ export default function HomePage() {
         </div>
       </section>
 
+      <GlassFAQ />
       <HomeAnimations />
     </main>
   );

@@ -3,7 +3,7 @@ import Link from 'next/link';
 export const metadata = {
   title: 'YORREN | Who We Are & What We Are Not',
   description:
-    'A full brand manifesto. Understand what Yorren stands for, what drives our mission, and where we draw the line.',
+    'Our core directive. Understand what Yorren stands for, what drives our mission, and where we draw the line.',
 };
 
 const WHO_ITEMS = [
@@ -70,7 +70,7 @@ export default function IdentityPage() {
       {/* Hero */}
       <section className="identity-page-hero">
         <div className="container">
-          <span className="tagline">THE YORREN MANIFESTO</span>
+          <span className="tagline">THE YORREN DIRECTIVE</span>
           <h1 className="identity-page-title">
             Who We Are.<br />
             <span className="identity-page-title-contrast">What We Are Not.</span>
