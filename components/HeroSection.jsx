@@ -14,134 +14,57 @@ export default function HeroSection() {
     const ctx = canvas.getContext('2d');
 
     let width, height;
-    let dots = [];
     const mouse = { x: -9999, y: -9999 };
     let rafId;
-    const DOT_COUNT = 120;
-    const MOUSE_RADIUS = 200;
-
-    class Dot {
-      constructor() {
-        this.reset();
-      }
-      reset() {
-        this.x = Math.random() * width;
-        this.y = Math.random() * height;
-        this.baseRadius = Math.random() * 1.5 + 0.5;
-        this.radius = this.baseRadius;
-        this.vx = (Math.random() - 0.5) * 0.3;
-        this.vy = (Math.random() - 0.5) * 0.3;
-        this.opacity = Math.random() * 0.3 + 0.1;
-        this.baseOpacity = this.opacity;
-      }
-      update() {
-        this.x += this.vx;
-        this.y += this.vy;
-        if (this.x < 0 || this.x > width) this.vx *= -1;
-        if (this.y < 0 || this.y > height) this.vy *= -1;
-
-        const dx = this.x - mouse.x;
-        const dy = this.y - mouse.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-
-        if (dist < MOUSE_RADIUS) {
-          const ratio = 1 - dist / MOUSE_RADIUS;
-          this.radius = this.baseRadius + ratio * 2.5;
-          this.opacity = this.baseOpacity + ratio * 0.5;
-          // Gentle repulsion
-          const angle = Math.atan2(dy, dx);
-          this.vx += Math.cos(angle) * ratio * 0.15;
-          this.vy += Math.sin(angle) * ratio * 0.15;
-        } else {
-          this.radius += (this.baseRadius - this.radius) * 0.05;
-          this.opacity += (this.baseOpacity - this.opacity) * 0.05;
-        }
-        // Damping
-        this.vx *= 0.995;
-        this.vy *= 0.995;
-      }
-    }
 
     function init() {
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
-      dots = [];
-      for (let i = 0; i < DOT_COUNT; i++) dots.push(new Dot());
     }
 
     function animate() {
-      ctx.clearRect(0, 0, width, height);
       const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      ctx.fillStyle = isLight ? 'rgba(250, 250, 250, 1)' : 'rgba(10, 10, 12, 1)';
+      ctx.fillRect(0, 0, width, height);
 
-      for (let i = 0; i < dots.length; i++) {
-        dots[i].update();
-        const d = dots[i];
-        const color = isLight ? `rgba(0,0,0,${d.opacity})` : `rgba(255,255,255,${d.opacity})`;
-        ctx.fillStyle = color;
-        ctx.beginPath();
-        ctx.arc(d.x, d.y, d.radius, 0, Math.PI * 2);
-        ctx.fill();
+      const time = Date.now() * 0.0005;
 
-        // Draw connections
-        for (let j = i + 1; j < dots.length; j++) {
-          const dx = d.x - dots[j].x;
-          const dy = d.y - dots[j].y;
-          const distSq = dx * dx + dy * dy;
-          const maxDist = 160;
-          if (distSq < maxDist * maxDist) {
-            const dist = Math.sqrt(distSq);
-            const lineAlpha = (1 - dist / maxDist) * 0.08;
-            ctx.strokeStyle = isLight ? `rgba(0,0,0,${lineAlpha})` : `rgba(255,255,255,${lineAlpha})`;
-            ctx.lineWidth = 0.5;
-            ctx.beginPath();
-            ctx.moveTo(d.x, d.y);
-            ctx.lineTo(dots[j].x, dots[j].y);
-            ctx.stroke();
-          }
-        }
-      }
-
-      // Draw subtle gradient orb near cursor
-      const dx = mouse.x, dy = mouse.y;
-      if (dx > 0 && dy > 0) {
-        const grad = ctx.createRadialGradient(dx, dy, 0, dx, dy, 180);
-        if (isLight) {
-          grad.addColorStop(0, 'rgba(100, 120, 200, 0.06)');
-          grad.addColorStop(1, 'rgba(100, 120, 200, 0)');
-        } else {
-          grad.addColorStop(0, 'rgba(59, 130, 246, 0.06)');
-          grad.addColorStop(1, 'rgba(59, 130, 246, 0)');
-        }
+      const drawOrb = (x, y, radius, color) => {
+        const grad = ctx.createRadialGradient(x, y, 0, x, y, radius);
+        grad.addColorStop(0, color);
+        grad.addColorStop(1, 'rgba(0,0,0,0)');
         ctx.fillStyle = grad;
-        ctx.fillRect(0, 0, width, height);
+        ctx.beginPath();
+        ctx.arc(x, y, radius, 0, Math.PI * 2);
+        ctx.fill();
+      };
+
+      // Blend mode for ambient glowing
+      ctx.globalCompositeOperation = isLight ? 'multiply' : 'screen';
+
+      // Amber and Gold hues, softened opacity for a subtle glow
+      const color1 = isLight ? 'rgba(245, 158, 11, 0.15)' : 'rgba(245, 158, 11, 0.3)'; // Amber
+      const color2 = isLight ? 'rgba(234, 179, 8, 0.15)' : 'rgba(234, 179, 8, 0.3)'; // Gold
+
+      // Slow moving massive orbs
+      drawOrb(width * 0.3 + Math.sin(time) * 200, height * 0.4 + Math.cos(time * 0.8) * 150, width * 0.6, color1);
+      drawOrb(width * 0.7 + Math.cos(time * 1.2) * 200, height * 0.6 + Math.sin(time * 0.9) * 150, width * 0.5, color2);
+      
+      // Cursor aura (Warm Orange)
+      if (mouse.x > 0 && mouse.y > 0) {
+        drawOrb(mouse.x, mouse.y, width * 0.4, isLight ? 'rgba(251, 146, 60, 0.15)' : 'rgba(251, 146, 60, 0.25)');
       }
 
+      ctx.globalCompositeOperation = 'source-over';
       rafId = requestAnimationFrame(animate);
     }
 
     const onMove = (e) => { mouse.x = e.clientX; mouse.y = e.clientY; };
     const onLeave = () => { mouse.x = -9999; mouse.y = -9999; };
-    const onClick = (e) => {
-      const cx = e.clientX;
-      const cy = e.clientY;
-      for (let i = 0; i < dots.length; i++) {
-        const d = dots[i];
-        const dx = d.x - cx;
-        const dy = d.y - cy;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < 300) {
-          const force = (300 - dist) / 300;
-          const angle = Math.atan2(dy, dx);
-          d.vx += Math.cos(angle) * force * 15;
-          d.vy += Math.sin(angle) * force * 15;
-        }
-      }
-    };
 
     window.addEventListener('resize', init);
     window.addEventListener('mousemove', onMove);
     window.addEventListener('mouseleave', onLeave);
-    window.addEventListener('click', onClick);
     init();
     animate();
 
@@ -191,7 +114,6 @@ export default function HeroSection() {
       window.removeEventListener('resize', init);
       window.removeEventListener('mousemove', onMove);
       window.removeEventListener('mouseleave', onLeave);
-      window.removeEventListener('click', onClick);
     };
   }, []);
 

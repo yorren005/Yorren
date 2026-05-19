@@ -11,10 +11,10 @@ const outfit = Outfit({ subsets: ['latin'], weight: ['400', '500', '600', '700',
 export const metadata = {
   metadataBase: new URL('https://yorren.com'),
   title: {
-    default: 'YORREN | Cognitive Architecture & Human Adaptation',
-    template: '%s | YORREN',
+    default: 'Yorren | Reinventing humanity',
+    template: '%s | Yorren',
   },
-  description: 'An initiative to rethink human capability in the era of artificial intelligence. We are building the definitive framework for extreme human adaptation.',
+  description: 'Reinventing humanity. An initiative to rethink human capability in the era of artificial intelligence.',
   keywords: ['cognitive architecture', 'human adaptation', 'neuroplasticity', 'AI synergy', 'Yorren protocol', 'human potential'],
   authors: [{ name: 'Yorren' }],
   creator: 'Yorren',
@@ -25,17 +25,17 @@ export const metadata = {
     telephone: false,
   },
   openGraph: {
-    title: 'YORREN | Cognitive Architecture & Human Adaptation',
-    description: 'An initiative to rethink human capability in the era of artificial intelligence.',
+    title: 'Yorren | Reinventing humanity',
+    description: 'Reinventing humanity. An initiative to rethink human capability in the era of artificial intelligence.',
     url: 'https://yorren.com',
-    siteName: 'YORREN',
+    siteName: 'Yorren',
     locale: 'en_US',
     type: 'website',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'YORREN | Cognitive Architecture & Human Adaptation',
-    description: 'An initiative to rethink human capability in the era of artificial intelligence.',
+    title: 'Yorren | Reinventing humanity',
+    description: 'Reinventing humanity. An initiative to rethink human capability in the era of artificial intelligence.',
     creator: '@yorren',
   },
   robots: {
@@ -50,8 +50,8 @@ export const metadata = {
     },
   },
   icons: {
-    icon: '/icon.png',
-    apple: '/icon.png',
+    icon: '/eye.png?v=4',
+    apple: '/eye.png?v=4',
   },
   verification: {
     google: 'zoeeH_5ohc-QF1gs9jeN9uQaUNkCeClRIafupwowdko',

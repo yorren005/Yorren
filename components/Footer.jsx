@@ -4,13 +4,27 @@ export default function Footer({ showTagline = false }) {
   return (
     <footer className="footer">
       <div style={{ width: 'calc(100% - 48px)', maxWidth: '1200px', margin: '0 auto', padding: '0 32px' }}>
-        {showTagline && (
-          <p className="footer-tagline">REDEFINING HUMAN POTENTIAL IN THE 21ST CENTURY</p>
-        )}
+        <div className="footer-main" style={{ display: 'flex', justifyContent: 'space-between', padding: '40px 0', borderBottom: '1px solid var(--border-color)', marginBottom: '24px', flexWrap: 'wrap', gap: '40px' }}>
+          <div className="footer-brand">
+            <Link href="/" aria-label="Yorren Home">
+              <img src="/assets/logo-cropped.png" alt="Yorren" className="logo-img" style={{ height: '32px', marginBottom: '16px' }} />
+            </Link>
+          </div>
+          <div className="footer-nav" style={{ display: 'flex', gap: '60px', flexWrap: 'wrap' }}>
+            <div className="footer-col" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <Link href="/" style={{ fontWeight: '600', fontSize: '13px', letterSpacing: '0.05em' }}>HOME</Link>
+              <Link href="/identity" style={{ fontSize: '14px', opacity: 0.7, textDecoration: 'none' }}>Directive</Link>
+              <Link href="/protocols" style={{ fontSize: '14px', opacity: 0.7, textDecoration: 'none' }}>Protocols</Link>
+              <Link href="/knowledge-base" style={{ fontSize: '14px', opacity: 0.7, textDecoration: 'none' }}>Knowledge Base</Link>
+            </div>
+            <div className="footer-col" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <Link href="/about" style={{ fontWeight: '600', fontSize: '13px', letterSpacing: '0.05em' }}>ABOUT</Link>
+              <Link href="/blog" style={{ fontSize: '14px', opacity: 0.7, textDecoration: 'none' }}>Blog</Link>
+            </div>
+          </div>
+        </div>
+
         <div className="footer-bottom">
-          <Link href="/" className="footer-logo" aria-label="Yorren Home">
-            <img src="/assets/logo-cropped.png" alt="Yorren" className="logo-img" />
-          </Link>
           <div className="footer-copyright">© 2024 YORREN. ALL RIGHTS RESERVED.</div>
           <div className="footer-links">
             <a href="https://pin.it/1Ayc7D4Zi" target="_blank" rel="noopener noreferrer" aria-label="Pinterest">
