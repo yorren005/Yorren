@@ -53,7 +53,7 @@ export default function BlogPage() {
 
     const heroTl = gsap.timeline({ defaults: { ease: 'power4.out', duration: 1.2 } });
     heroTl
-      .from('.blog-hero .tagline', { y: 20, opacity: 0 }, 0.2)
+      .from('.blog-hero-tag', { y: 20, opacity: 0 }, 0.2)
       .from('.blog-hero-title', { y: 40, opacity: 0, duration: 1 }, 0.3)
       .from('.blog-hero-sub', { y: 20, opacity: 0 }, 0.5)
       .from('.toggle-track', { y: 30, opacity: 0, duration: 0.8 }, 0.7)
@@ -134,26 +134,28 @@ export default function BlogPage() {
     <main>
       <section className="blog-hero">
         <div className="blog-hero-grain" />
+        <div className="blog-hero-grid" />
+        <div className="blog-hero-glow" />
         <DottedGlowBackground
           className="pointer-events-none"
-          opacity={0.8}
-          gap={14}
-          radius={1.2}
+          opacity={0.6}
+          gap={16}
+          radius={1}
           colorLightVar="--color-neutral-400"
           glowColorLightVar="--color-neutral-500"
-          colorDarkVar="--color-neutral-500"
-          glowColorDarkVar="--color-sky-700"
+          colorDarkVar="--color-neutral-600"
+          glowColorDarkVar="--color-sky-800"
           backgroundOpacity={0}
-          speedMin={0.2}
-          speedMax={1}
-          speedScale={0.8}
+          speedMin={0.1}
+          speedMax={0.5}
+          speedScale={0.5}
         />
-        <div className="container">
-          <div className="hero-tagline-wrapper" style={{ position: 'relative', display: 'inline-block' }}>
-            <span className="tagline" style={{ position: 'relative', zIndex: 1 }}>DISPATCHES FROM THE FRONTIER</span>
+        <div className="container blog-hero-container">
+          <div className="blog-hero-tag-wrapper">
+            <span className="blog-hero-tag">JOURNAL // DISPATCHES</span>
           </div>
-          <h1 className="blog-hero-title" id="blog-hero-title">The Blog</h1>
-          <p className="blog-hero-sub">Exploring the intersection of cognition, physicality, and philosophy.</p>
+          <h1 className="blog-hero-title" id="blog-hero-title">YORREN JOURNAL</h1>
+          <p className="blog-hero-sub">Systemic essays, logs, and theories on extreme human adaptation, cognitive optimization, and the future of intelligence in the machine age.</p>
         </div>
       </section>
 
