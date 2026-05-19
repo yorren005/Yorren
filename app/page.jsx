@@ -3,6 +3,7 @@ import GoogleGeminiEffectDemo from '@/components/google-gemini-effect-demo';
 import YorrenGlobeSection from '@/components/YorrenGlobeSection';
 import HomeAnimations from '@/components/HomeAnimations';
 import HomeBlogGrid from '@/components/HomeBlogGrid';
+import IdentityTeaser from '@/components/IdentityTeaser';
 
 
 
@@ -53,6 +54,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <IdentityTeaser />
 
       <HomeBlogGrid />
 
